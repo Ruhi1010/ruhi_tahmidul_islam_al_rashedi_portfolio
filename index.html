@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruhi Tahmidul Islam Al Rashedi — Data Science &amp; Machine Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0a0a0a;
+  --charcoal:#141414;
+  --ash:#242424;
+  --ash-light:#3a3a3a;
+  --line-dark:#333333;
+  --line-light:#dcdad5;
+  --offwhite:#f5f4f1;
+  --white:#ffffff;
+  --gray-mid:#8b8b87;
+  --muted-dark:#9d9d99;
+  --muted-light:#6c6c68;
+  --ease:cubic-bezier(.16,.84,.44,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--offwhite);
+  color:var(--black);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--black);color:var(--white);}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.mono{font-family:'JetBrains Mono',monospace;}
+.disp{font-family:'Space Grotesk',sans-serif;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+@media(max-width:768px){.wrap{padding:0 24px;}}
+
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--muted-light);
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:18px;
+}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--muted-light);display:inline-block;}
+.section-dark .eyebrow{color:var(--muted-dark);}
+.section-dark .eyebrow::before{background:var(--muted-dark);}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ---------- NAV ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:22px 0;
+  transition:padding .4s var(--ease),background .4s var(--ease),border-color .4s var(--ease);
+  border-bottom:1px solid transparent;
+}
+header.scrolled{
+  padding:14px 0;
+  background:rgba(245,244,241,.85);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-light);
+}
+nav{display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;letter-spacing:-.01em;}
+.logo span{color:var(--muted-light);}
+.nav-links{display:flex;gap:38px;list-style:none;}
+.nav-links a{
+  font-size:13px;font-weight:500;letter-spacing:.02em;
+  position:relative;padding-bottom:4px;color:var(--black);
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--black);
+  transition:width .3s var(--ease);
+}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  border:1px solid var(--black);padding:9px 18px;border-radius:2px;
+  transition:background .3s var(--ease),color .3s var(--ease);
+}
+.nav-cta:hover{background:var(--black);color:var(--white);}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px;z-index:1100;}
+.burger span{width:22px;height:2px;background:var(--black);transition:transform .3s var(--ease),opacity .3s var(--ease);}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.burger.open span:nth-child(2){opacity:0;}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-menu{
+  position:fixed;inset:0;background:var(--black);z-index:1050;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
+  transform:translateY(-100%);transition:transform .5s var(--ease);
+}
+.mobile-menu.open{transform:translateY(0);}
+.mobile-menu a{color:var(--white);font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:500;}
+
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none;}
+  .burger{display:flex;}
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  position:relative;
+  background:var(--offwhite);
+  padding:140px 0 80px;
+  overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(var(--line-light) 1px,transparent 1px),linear-gradient(90deg,var(--line-light) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 70% 60% at 60% 40%,black 10%,transparent 70%);
+  opacity:.6;
+}
+.hero-inner{
+  display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:center;
+  position:relative;z-index:2;
+}
+.hero-tag{
+  font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted-light);margin-bottom:24px;display:flex;align-items:center;gap:10px;
+}
+.hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--black);animation:pulse 2.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+h1.hero-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:clamp(38px,5.4vw,68px);
+  line-height:1.04;
+  letter-spacing:-.02em;
+  margin-bottom:18px;
+}
+.hero-role{
+  font-size:clamp(17px,2vw,22px);
+  color:var(--muted-light);
+  font-weight:500;
+  margin-bottom:26px;
+}
+.hero-role strong{color:var(--black);font-weight:600;}
+.hero-desc{
+  max-width:480px;font-size:16px;line-height:1.75;color:var(--muted-light);margin-bottom:38px;
+}
+.btn-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:26px;}
+.btn{
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  padding:14px 26px;border-radius:2px;display:inline-flex;align-items:center;gap:10px;
+  transition:all .35s var(--ease);cursor:pointer;
+}
+.btn-primary{background:var(--black);color:var(--white);border:1px solid var(--black);}
+.btn-primary:hover{background:transparent;color:var(--black);}
+.btn-ghost{border:1px solid var(--line-dark-alt,#c9c7c0);color:var(--black);}
+.btn-ghost:hover{border-color:var(--black);background:var(--black);color:var(--white);}
+.skills-link{
+  font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted-light);
+  display:inline-flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--line-light);padding-bottom:2px;
+  transition:border-color .3s,color .3s;
+}
+.skills-link:hover{color:var(--black);border-color:var(--black);}
+.skills-link svg{transition:transform .3s var(--ease);}
+.skills-link:hover svg{transform:translateY(3px);}
+
+.hero-portrait-wrap{
+  position:relative;display:flex;justify-content:center;align-items:center;
+}
+.portrait-ring{
+  position:absolute;width:108%;height:108%;border:1px solid var(--line-light);border-radius:50%;
+  animation:spin 60s linear infinite;
+}
+.portrait-ring::before,.portrait-ring::after{
+  content:'';position:absolute;width:5px;height:5px;background:var(--black);border-radius:50%;
+}
+.portrait-ring::before{top:-2.5px;left:50%;margin-left:-2.5px;}
+.portrait-ring::after{bottom:6%;right:8%;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.portrait{
+  width:320px;height:320px;border-radius:50%;
+  background:var(--ash);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.35);
+}
+.portrait img{
+  width:100%;height:100%;object-fit:cover;object-position:center 30%;
+  position:relative;z-index:1;
+}
+.portrait-mono{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--white);
+  font-size:96px;letter-spacing:-.02em;position:relative;z-index:2;opacity:.94;
+}
+.portrait-nodes{position:absolute;inset:0;opacity:.35;z-index:2;pointer-events:none;}
+
+/* social links */
+.social-row{display:flex;gap:14px;align-items:center;}
+.social-link{
+  width:42px;height:42px;border:1px solid var(--line-light);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--black);transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease),transform .3s var(--ease);
+}
+.social-link:hover{background:var(--black);color:var(--white);border-color:var(--black);transform:translateY(-3px);}
+.social-link svg{width:18px;height:18px;}
+footer .social-link{border-color:var(--line-dark);color:var(--white);}
+footer .social-link:hover{background:var(--white);color:var(--black);border-color:var(--white);}
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;text-align:center;}
+  .hero-desc{margin-left:auto;margin-right:auto;}
+  .btn-row{justify-content:center;}
+  .hero-portrait-wrap{order:-1;margin-bottom:20px;}
+  .portrait{width:220px;height:220px;}
+  .portrait-mono{font-size:64px;}
+  .eyebrow{justify-content:center;}
+  .hero-tag{justify-content:center;}
+  .social-row{justify-content:center;}
+}
+
+/* ---------- SECTION SHELL ---------- */
+section{padding:120px 0;position:relative;}
+@media(max-width:768px){section{padding:80px 0;}}
+.section-dark{background:var(--black);color:var(--white);}
+.section-title{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,42px);
+  letter-spacing:-.015em;margin-bottom:22px;line-height:1.15;
+}
+.section-head{max-width:640px;margin-bottom:64px;}
+.section-sub{color:var(--muted-light);font-size:15.5px;line-height:1.75;}
+.section-dark .section-sub{color:var(--muted-dark);}
+
+/* ---------- ABOUT ---------- */
+.about-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:70px;align-items:start;}
+.about-text p{font-size:16px;line-height:1.85;color:var(--muted-light);margin-bottom:20px;}
+.about-values{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px;}
+.value-chip{
+  font-family:'JetBrains Mono',monospace;font-size:12.5px;
+  border:1px solid var(--line-light);padding:12px 14px;border-radius:2px;
+  display:flex;align-items:center;gap:10px;color:var(--black);
+}
+.value-chip::before{content:'';width:5px;height:5px;background:var(--black);flex-shrink:0;}
+.about-panel{
+  border:1px solid var(--line-light);border-radius:4px;padding:38px 32px;background:var(--white);
+}
+.about-panel-title{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-light);margin-bottom:26px;}
+.about-panel-list{list-style:none;display:flex;flex-direction:column;}
+.about-panel-list li{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 0;border-top:1px solid var(--line-light);
+  font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;
+}
+.about-panel-list li:first-child{border-top:none;}
+.about-panel-list li span.n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted-light);font-weight:400;}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr;}.about-values{grid-template-columns:1fr;}}
+
+/* ---------- TIMELINE (education/experience) ---------- */
+.timeline{position:relative;border-left:1px solid var(--line-light);padding-left:44px;margin-left:6px;}
+.section-dark .timeline{border-color:var(--line-dark);}
+.tl-item{position:relative;padding-bottom:52px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-dot{
+  position:absolute;left:-49px;top:4px;width:9px;height:9px;border-radius:50%;
+  background:var(--black);border:3px solid var(--offwhite);
+}
+.section-dark .tl-dot{background:var(--white);border-color:var(--black);}
+.tl-period{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted-light);letter-spacing:.05em;margin-bottom:10px;}
+.section-dark .tl-period{color:var(--muted-dark);}
+.tl-card{
+  border:1px solid var(--line-light);border-radius:4px;padding:28px 30px;background:var(--white);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease);
+}
+.section-dark .tl-card{background:var(--charcoal);border-color:var(--line-dark);}
+.tl-card:hover{transform:translateX(6px);box-shadow:0 18px 40px -24px rgba(0,0,0,.4);}
+.tl-role{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:600;margin-bottom:6px;}
+.tl-org{font-size:14.5px;color:var(--muted-light);margin-bottom:14px;}
+.section-dark .tl-org{color:var(--muted-dark);}
+.tl-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.tl-tag{font-family:'JetBrains Mono',monospace;font-size:11px;border:1px solid var(--line-light);padding:5px 10px;border-radius:20px;color:var(--muted-light);}
+.section-dark .tl-tag{border-color:var(--line-dark);color:var(--muted-dark);}
+.tl-desc{font-size:14.5px;line-height:1.75;color:var(--muted-light);}
+.section-dark .tl-desc{color:var(--muted-dark);}
+
+/* ---------- SKILLS ---------- */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-light);border:1px solid var(--line-light);}
+.skill-cat{background:var(--offwhite);padding:34px 30px;}
+.skill-cat-title{
+  font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--muted-light);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--line-light);
+}
+.skill-tags{display:flex;flex-wrap:wrap;gap:9px;}
+.skill-pill{
+  font-size:13.5px;padding:8px 14px;border:1px solid var(--line-light);border-radius:2px;
+  background:var(--white);transition:background .3s var(--ease),color .3s var(--ease);
+}
+.skill-pill:hover{background:var(--black);color:var(--white);border-color:var(--black);}
+.skill-pill small{font-family:'JetBrains Mono',monospace;color:var(--muted-light);font-size:11px;margin-left:5px;}
+.skill-pill:hover small{color:var(--muted-dark);}
+@media(max-width:900px){.skills-grid{grid-template-columns:1fr;}}
+
+/* ---------- SERVICES ---------- */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark);}
+.svc-card{background:var(--black);padding:38px 32px;min-height:280px;display:flex;flex-direction:column;transition:background .4s var(--ease);}
+.svc-card:hover{background:var(--charcoal);}
+.svc-num{font-family:'JetBrains Mono',monospace;color:var(--muted-dark);font-size:13px;margin-bottom:24px;}
+.svc-title{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;margin-bottom:14px;}
+.svc-desc{font-size:14px;color:var(--muted-dark);line-height:1.7;margin-bottom:18px;flex-grow:1;}
+.svc-list{list-style:none;font-size:13px;color:var(--muted-dark);margin-bottom:18px;}
+.svc-list li{padding:4px 0;position:relative;padding-left:16px;}
+.svc-list li::before{content:'–';position:absolute;left:0;color:var(--muted-dark);}
+.svc-tool{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--white);border-top:1px solid var(--line-dark);padding-top:16px;letter-spacing:.02em;}
+@media(max-width:900px){.services-grid{grid-template-columns:1fr;}}
+
+/* ---------- PROJECTS ---------- */
+.project-featured{
+  border:1px solid var(--line-light);border-radius:6px;padding:52px;margin-bottom:26px;
+  background:var(--black);color:var(--white);position:relative;overflow:hidden;
+}
+.project-featured .eyebrow{color:var(--muted-dark);}
+.project-featured .eyebrow::before{background:var(--muted-dark);}
+.pf-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3vw,34px);font-weight:600;margin-bottom:20px;max-width:640px;line-height:1.2;}
+.pf-desc{font-size:15.5px;line-height:1.85;color:var(--muted-dark);max-width:640px;margin-bottom:28px;}
+.pf-note{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--white);border-left:2px solid var(--white);padding-left:16px;margin-bottom:30px;max-width:600px;line-height:1.7;opacity:.9;}
+.tag-row{display:flex;flex-wrap:wrap;gap:9px;}
+.tag{font-family:'JetBrains Mono',monospace;font-size:11.5px;border:1px solid var(--line-dark);padding:7px 13px;border-radius:20px;color:var(--muted-dark);}
+.project-featured .tag{border-color:#3a3a3a;}
+
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.proj-card{
+  border:1px solid var(--line-light);border-radius:6px;padding:38px;background:var(--white);
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease);
+}
+.proj-card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -30px rgba(0,0,0,.35);}
+.proj-title{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:600;margin-bottom:14px;}
+.proj-desc{font-size:14.5px;color:var(--muted-light);line-height:1.75;margin-bottom:22px;}
+@media(max-width:900px){.projects-grid{grid-template-columns:1fr;}.project-featured{padding:34px 26px;}}
+
+/* ---------- RESEARCH FOCUS ---------- */
+.research-wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.research-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+.research-tags .tag{color:var(--muted-dark);}
+.pipeline{width:100%;height:auto;}
+.pipeline text{font-family:'JetBrains Mono',monospace;font-size:11px;fill:var(--muted-dark);}
+.pipeline .node{fill:var(--black);stroke:var(--white);stroke-width:2;}
+.pipeline .lbl{fill:var(--white);font-size:12px;font-family:'Space Grotesk',sans-serif;font-weight:600;}
+.pipeline .ln{stroke:var(--line-dark);stroke-width:1;stroke-dasharray:4 4;}
+@media(max-width:900px){.research-wrap{grid-template-columns:1fr;}}
+
+/* ---------- CONTACT ---------- */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;}
+.contact-info-item{margin-bottom:30px;}
+.contact-label{font-family:'JetBrains Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted-light);margin-bottom:8px;}
+.contact-value{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:500;}
+.contact-value a:hover{border-bottom:1px solid var(--black);}
+form{display:flex;flex-direction:column;gap:20px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+label{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-light);margin-bottom:8px;display:block;}
+input,textarea{
+  width:100%;background:transparent;border:none;border-bottom:1px solid var(--line-light);
+  padding:10px 2px;font-family:'Inter',sans-serif;font-size:15px;color:var(--black);
+  transition:border-color .3s var(--ease);
+}
+input:focus,textarea:focus{outline:none;border-color:var(--black);}
+textarea{resize:vertical;min-height:110px;}
+.form-submit{align-self:flex-start;margin-top:10px;border:none;font-family:'JetBrains Mono',monospace;}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--black);color:var(--white);padding:60px 0 30px;}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:30px;padding-bottom:40px;border-bottom:1px solid var(--line-dark);}
+.footer-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;margin-bottom:6px;}
+.footer-role{font-size:13.5px;color:var(--muted-dark);}
+.footer-links{display:flex;gap:28px;list-style:none;flex-wrap:wrap;}
+.footer-links a{font-size:13.5px;color:var(--muted-dark);transition:color .3s;}
+.footer-links a:hover{color:var(--white);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:24px;}
+.footer-bottom p,.footer-bottom a{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted-dark);}
+.footer-bottom a:hover{color:var(--white);}
+
+@media(max-width:600px){.footer-top{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a href="#home" class="logo">R<span>.T.I.</span> Al Rashedi</a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#education">Education</a>
+  <a href="#experience">Experience</a>
+  <a href="#skills">Skills</a>
+  <a href="#services">Services</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="hero-tag"><span class="dot"></span>Available for data science &amp; ML opportunities</div>
+      <h1 class="hero-name">Ruhi Tahmidul<br>Islam Al Rashedi</h1>
+      <p class="hero-role">Data Science &amp; <strong>Machine Learning</strong> Professional</p>
+      <p class="hero-desc">Transforming data into meaningful insights and intelligent solutions through Data Science, Machine Learning, and Explainable AI.</p>
+      <div class="btn-row">
+        <a href="#projects" class="btn btn-primary">View My Projects →</a>
+        <a href="#contact" class="btn btn-ghost">Contact Me</a>
+      </div>
+      <a href="#skills" class="skills-link">Explore My Skills
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </a>
+      <div class="social-row" style="margin-top:32px;">
+        <a class="social-link" href="https://www.facebook.com/ruhitahmidulislam/" target="_blank" rel="noopener noreferrer" aria-label="Facebook profile">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8.1h2.7l.4-3.2h-3.1V7.7c0-.9.3-1.6 1.6-1.6h1.7V3.2C15.9 3.1 14.8 3 13.6 3c-2.5 0-4.3 1.5-4.3 4.4v2.3H6.6v3.2h2.7V21h4.2z"/></svg>
+        </a>
+        <a class="social-link" href="https://www.linkedin.com/in/ruhi-tahmidul-islam-al-rashedi-07a18727b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.5H3.56V21h3.38V8.5zM5.25 3a1.96 1.96 0 100 3.92A1.96 1.96 0 005.25 3zM20.5 21h-3.37v-6.4c0-1.53-.03-3.5-2.13-3.5-2.14 0-2.47 1.67-2.47 3.39V21H9.16V8.5h3.24v1.71h.05c.45-.85 1.56-1.75 3.2-1.75 3.42 0 4.05 2.25 4.05 5.18V21z"/></svg>
+        </a>
+        <a class="social-link" href="https://github.com/Ruhi1010" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.2c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.72-2.78.62-3.37-1.37-3.37-1.37-.46-1.19-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.3 9.3 0 015 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0022 12.2C22 6.58 17.52 2 12 2z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-portrait-wrap">
+      <div class="portrait-ring"></div>
+      <div class="portrait">
+        <img src="photo.jpeg" alt="Portrait of Ruhi Tahmidul Islam Al Rashedi">
+        <svg class="portrait-nodes" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="70" r="2.5" fill="#fff"/><circle cx="250" cy="50" r="2" fill="#fff"/>
+          <circle cx="280" cy="200" r="2.5" fill="#fff"/>
+          <line x1="60" y1="70" x2="250" y2="50" stroke="#fff" stroke-width="0.6"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">About</div>
+      <h2 class="section-title">A curious, analytical mind working<br>at the intersection of data and impact.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>Ruhi is passionate about Data Science and Machine Learning, and enjoys exploring data, identifying patterns, and developing intelligent solutions to meaningful real-world problems. His interests span Data Science, Machine Learning, Explainable AI, and Predictive Analytics.</p>
+        <p>His work is guided by the belief that a model's value isn't just in how well it predicts — it's in how well it can be understood, trusted, and relied upon. That focus shapes his approach to building models that are interpretable, reliable, and genuinely useful.</p>
+        <p>He holds a B.Sc. in Computer Science and Engineering, and continues to build on that foundation through hands-on research, technical experimentation, and a steady commitment to continuous learning.</p>
+        <div class="about-values">
+          <div class="value-chip">Continuous Learning</div>
+          <div class="value-chip">Problem Solving</div>
+          <div class="value-chip">Analytical Thinking</div>
+          <div class="value-chip">Practical Implementation</div>
+          <div class="value-chip">Collaboration</div>
+          <div class="value-chip">Attention to Detail</div>
+        </div>
+      </div>
+      <div class="about-panel reveal">
+        <div class="about-panel-title">Core Foundation</div>
+        <ul class="about-panel-list">
+          <li>Computer Science &amp; Engineering <span class="n">B.Sc.</span></li>
+          <li>Data Science <span class="n">Focus</span></li>
+          <li>Machine Learning <span class="n">Focus</span></li>
+          <li>Explainable AI <span class="n">Research</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" style="background:var(--white);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Education</div>
+      <h2 class="section-title">Academic Foundation</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <div class="tl-period">2022 — 2026</div>
+        <div class="tl-card">
+          <div class="tl-role">B.Sc. in Computer Science and Engineering</div>
+          <div class="tl-org">Notre Dame University Bangladesh</div>
+          <p class="tl-desc">Built a strong foundation across programming, computing systems, and analytical problem solving, with a growing specialization in data science and machine learning through independent research.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="section-dark">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Experience</div>
+      <h2 class="section-title">Professional Experience</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <div class="tl-period">May 2026 — June 2026</div>
+        <div class="tl-card">
+          <div class="tl-role">NOC Engineer Intern</div>
+          <div class="tl-org">Doly IT Corner</div>
+          <p class="tl-desc">Gained hands-on exposure to network operations, technical monitoring, and IT infrastructure, while developing troubleshooting skills and experience collaborating within a technical team.</p>
+          <div class="tl-tags">
+            <span class="tl-tag">Network Operations</span>
+            <span class="tl-tag">Technical Monitoring</span>
+            <span class="tl-tag">IT Infrastructure</span>
+            <span class="tl-tag">Troubleshooting</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Skills</div>
+      <h2 class="section-title">Technical &amp; Professional Toolkit</h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-cat">
+        <div class="skill-cat-title">Programming</div>
+        <div class="skill-tags">
+          <span class="skill-pill">Python</span><span class="skill-pill">C++</span><span class="skill-pill">C</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Data Science &amp; ML</div>
+        <div class="skill-tags">
+          <span class="skill-pill">NumPy</span><span class="skill-pill">Pandas</span><span class="skill-pill">Scikit-learn</span>
+          <span class="skill-pill">Predictive Modeling</span><span class="skill-pill">Data Preprocessing</span>
+          <span class="skill-pill">EDA</span><span class="skill-pill">Model Evaluation</span>
+          <span class="skill-pill">Explainable AI</span><span class="skill-pill">Imbalanced Data Analysis</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Web Development</div>
+        <div class="skill-tags">
+          <span class="skill-pill">HTML <small>Basic</small></span><span class="skill-pill">CSS <small>Basic</small></span>
+          <span class="skill-pill">JavaScript <small>Basic</small></span><span class="skill-pill">PHP <small>Basic</small></span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Database</div>
+        <div class="skill-tags">
+          <span class="skill-pill">MySQL <small>Basic</small></span><span class="skill-pill">SQL</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Networking</div>
+        <div class="skill-tags">
+          <span class="skill-pill">Networking <small>Basic</small></span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Productivity Tools</div>
+        <div class="skill-tags">
+          <span class="skill-pill">MS Word</span><span class="skill-pill">MS Excel</span><span class="skill-pill">MS PowerPoint</span>
+        </div>
+      </div>
+      <div class="skill-cat" style="grid-column:1/-1;">
+        <div class="skill-cat-title">Professional Skills</div>
+        <div class="skill-tags">
+          <span class="skill-pill">Leadership</span><span class="skill-pill">Teamwork</span>
+          <span class="skill-pill">Fast Learner</span><span class="skill-pill">Attentive</span>
+          <span class="skill-pill">Problem Solving</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section-dark">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Services</div>
+      <h2 class="section-title">How I Can Help</h2>
+    </div>
+    <div class="services-grid reveal">
+      <div class="svc-card">
+        <div class="svc-num">01</div>
+        <div class="svc-title">Data Analysis &amp; Visualization</div>
+        <div class="svc-desc">Transform raw datasets into meaningful insights.</div>
+        <ul class="svc-list">
+          <li>Data cleaning</li><li>Data preprocessing</li><li>Exploratory data analysis</li>
+          <li>Statistical analysis</li><li>Data visualization</li>
+        </ul>
+        <div class="svc-tool">Python · Pandas · NumPy</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">02</div>
+        <div class="svc-title">Machine Learning Solutions</div>
+        <div class="svc-desc">Develop machine learning solutions for real problems.</div>
+        <ul class="svc-list">
+          <li>Classification</li><li>Prediction</li><li>Data-driven decision making</li><li>Model evaluation</li>
+        </ul>
+        <div class="svc-tool">Scikit-learn</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">03</div>
+        <div class="svc-title">Explainable AI &amp; Model Analysis</div>
+        <div class="svc-desc">Make ML models easier to understand and interpret.</div>
+        <ul class="svc-list">
+          <li>SHAP-based explanations</li><li>Ensemble model analysis</li>
+          <li>Explanation stability</li><li>Model performance analysis</li>
+        </ul>
+        <div class="svc-tool">SHAP · Explainability</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">04</div>
+        <div class="svc-title">Imbalanced Data Analysis</div>
+        <div class="svc-desc">Work with highly imbalanced datasets, including healthcare data.</div>
+        <ul class="svc-list">
+          <li>Appropriate preprocessing</li><li>Imbalance handling</li>
+          <li>Reliable evaluation strategies</li><li>AUPRC-based evaluation</li><li>Model comparison</li>
+        </ul>
+        <div class="svc-tool">Healthcare Data Focus</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">05</div>
+        <div class="svc-title">Python &amp; Data Science Projects</div>
+        <div class="svc-desc">Develop Python-based data science projects end to end.</div>
+        <ul class="svc-list">
+          <li>Data preprocessing pipelines</li><li>Machine learning experiments</li>
+          <li>Model evaluation</li><li>Research-oriented implementations</li>
+        </ul>
+        <div class="svc-tool">Python</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">06</div>
+        <div class="svc-title">SQL &amp; Database Solutions</div>
+        <div class="svc-desc">Basic SQL/MySQL support for data-driven workflows.</div>
+        <ul class="svc-list">
+          <li>Data querying</li><li>Data organization</li>
+          <li>Database-related tasks</li><li>Supporting analysis workflows</li>
+        </ul>
+        <div class="svc-tool">SQL · MySQL</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--white);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Projects</div>
+      <h2 class="section-title">Selected Work</h2>
+    </div>
+
+    <div class="project-featured reveal">
+      <div class="eyebrow">Featured Research</div>
+      <h3 class="pf-title">XAI-Guided Ensemble Selection for Healthcare Data</h3>
+      <p class="pf-desc">Developed an Explainable AI-guided ensemble selection framework for highly imbalanced healthcare datasets. The approach integrates SHAP explanations, AUPRC-based performance evaluation, explanation stability, and model diversity into the ensemble selection process.</p>
+      <p class="pf-note">Nested cross-validation was used throughout to reduce data leakage risk and improve the reliability of the reported results.</p>
+      <div class="tag-row">
+        <span class="tag">Explainable AI</span><span class="tag">SHAP</span><span class="tag">Ensemble Learning</span>
+        <span class="tag">AUPRC</span><span class="tag">Imbalanced Healthcare Data</span>
+        <span class="tag">Nested Cross-Validation</span><span class="tag">Model Stability</span><span class="tag">Model Reliability</span>
+      </div>
+    </div>
+
+    <div class="projects-grid">
+      <div class="proj-card reveal">
+        <div class="proj-title">Machine Learning &amp; Data Analysis Projects</div>
+        <p class="proj-desc">Python-based data science and machine learning projects involving data preprocessing, exploratory analysis, predictive modeling, and model evaluation, with a focus on extracting meaningful insights from practical datasets.</p>
+        <div class="tag-row">
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Python</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Pandas</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">NumPy</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Scikit-learn</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Machine Learning</span>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-title">Web Development Projects</div>
+        <p class="proj-desc">Web-based projects developed using HTML, CSS, JavaScript, and PHP, applying fundamental web development concepts to create functional and user-focused applications.</p>
+        <div class="tag-row">
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">HTML</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">CSS</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">JavaScript</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">PHP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH FOCUS -->
+<section class="section-dark">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Research Focus</div>
+      <h2 class="section-title">Explainable &amp; Reliable Machine Learning<br>for Imbalanced Healthcare Data</h2>
+    </div>
+    <div class="research-wrap">
+      <div class="reveal">
+        <p class="section-sub">Ruhi's research centers on building machine learning systems for healthcare data that are not only predictive, but trustworthy — combining ensemble learning, SHAP-based interpretation, and rigorous evaluation under severe class imbalance to arrive at explanations and decisions that hold up under scrutiny.</p>
+        <div class="research-tags">
+          <span class="tag">Explainable AI</span><span class="tag">Ensemble Learning</span><span class="tag">SHAP</span>
+          <span class="tag">Imbalanced Datasets</span><span class="tag">AUPRC</span><span class="tag">Explanation Stability</span>
+          <span class="tag">Model Reliability</span><span class="tag">Nested Cross-Validation</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <svg class="pipeline" viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg">
+          <line x1="60" y1="40" x2="60" y2="220" class="ln"/>
+          <line x1="60" y1="40" x2="420" y2="40" class="ln"/>
+          <line x1="60" y1="220" x2="420" y2="220" class="ln"/>
+          <line x1="420" y1="40" x2="420" y2="220" class="ln"/>
+          <circle class="node" cx="60" cy="40" r="7"/>
+          <circle class="node" cx="240" cy="40" r="7"/>
+          <circle class="node" cx="420" cy="40" r="7"/>
+          <circle class="node" cx="420" cy="220" r="7"/>
+          <circle class="node" cx="60" cy="220" r="7"/>
+          <text class="lbl" x="80" y="45">Data</text>
+          <text class="lbl" x="205" y="45">Machine Learning</text>
+          <text class="lbl" x="325" y="45">Explainability</text>
+          <text class="lbl" x="325" y="225">Evaluation</text>
+          <text class="lbl" x="80" y="225">Reliable Decisions</text>
+          <text x="140" y="140" text-anchor="middle" fill="#7a7a7a" font-family="JetBrains Mono" font-size="10">SHAP · AUPRC · Stability</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--white);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Contact</div>
+      <h2 class="section-title">Let's Work With Data &amp; Ideas</h2>
+      <p class="section-sub">Have a data science, machine learning, or technology project in mind? Let's connect and explore how data-driven solutions can create meaningful impact.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-info-item">
+          <div class="contact-label">Email</div>
+          <div class="contact-value"><a href="mailto:ruhitahmidul443@gmail.com">ruhitahmidul443@gmail.com</a></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-label">Phone</div>
+          <div class="contact-value"><a href="tel:+8801778116924">01778116924</a></div>
+        </div>
+      </div>
+      <form class="reveal" id="contactForm" action="https://formsubmit.co/ruhitahmidul443@gmail.com" method="POST">
+        <!-- FormSubmit.co config: plain-text email, no captcha page, spam honeypot -->
+        <input type="hidden" name="_subject" value="New portfolio contact form message">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="form-row">
+          <div><label for="name">Name</label><input type="text" id="name" name="name" required></div>
+          <div><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+        </div>
+        <div><label for="subject">Subject</label><input type="text" id="subject" name="subject" required></div>
+        <div><label for="message">Message</label><textarea id="message" name="message" required></textarea></div>
+        <button type="submit" class="btn btn-primary form-submit">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-name">Ruhi Tahmidul Islam Al Rashedi</div>
+        <div class="footer-role">Data Science &amp; Machine Learning Professional</div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="social-row">
+        <a class="social-link" href="https://www.facebook.com/ruhitahmidulislam/" target="_blank" rel="noopener noreferrer" aria-label="Facebook profile">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8.1h2.7l.4-3.2h-3.1V7.7c0-.9.3-1.6 1.6-1.6h1.7V3.2C15.9 3.1 14.8 3 13.6 3c-2.5 0-4.3 1.5-4.3 4.4v2.3H6.6v3.2h2.7V21h4.2z"/></svg>
+        </a>
+        <a class="social-link" href="https://www.linkedin.com/in/ruhi-tahmidul-islam-al-rashedi-07a18727b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.5H3.56V21h3.38V8.5zM5.25 3a1.96 1.96 0 100 3.92A1.96 1.96 0 005.25 3zM20.5 21h-3.37v-6.4c0-1.53-.03-3.5-2.13-3.5-2.14 0-2.47 1.67-2.47 3.39V21H9.16V8.5h3.24v1.71h.05c.45-.85 1.56-1.75 3.2-1.75 3.42 0 4.05 2.25 4.05 5.18V21z"/></svg>
+        </a>
+        <a class="social-link" href="https://github.com/Ruhi1010" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.2c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.72-2.78.62-3.37-1.37-3.37-1.37-.46-1.19-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.3 9.3 0 015 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0022 12.2C22 6.58 17.52 2 12 2z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Ruhi Tahmidul Islam Al Rashedi. All rights reserved.</p>
+      <a href="mailto:ruhitahmidul443@gmail.com">ruhitahmidul443@gmail.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// header scroll state
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// mobile menu
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  burger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}));
+
+// reveal on scroll
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// contact form — submits to FormSubmit.co via fetch so the page never reloads
+const form = document.getElementById('contactForm');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = form.querySelector('.form-submit');
+  const original = btn.textContent;
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      btn.textContent = 'Message sent ✓';
+      form.reset();
+    } else {
+      btn.textContent = 'Something went wrong — try again';
+    }
+  } catch (err) {
+    btn.textContent = 'Something went wrong — try again';
+  } finally {
+    btn.disabled = false;
+    setTimeout(() => { btn.textContent = original; }, 3200);
+  }
+});
+</script>
+</body>
+</html>
