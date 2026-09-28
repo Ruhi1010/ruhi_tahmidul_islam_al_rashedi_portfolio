@@ -339,6 +339,19 @@ section{padding:120px 0;position:relative;}
 .proj-card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -30px rgba(0,0,0,.35);}
 .proj-title{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:600;margin-bottom:14px;}
 .proj-desc{font-size:14.5px;color:var(--muted-light);line-height:1.75;margin-bottom:22px;}
+.projects-grid.live{margin-bottom:24px;}
+.proj-card.live{display:flex;flex-direction:column;}
+.proj-kicker{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted-light);display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.proj-kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--black);animation:pulse 2.4s infinite;}
+.proj-points{list-style:none;margin:0 0 24px;}
+.proj-points li{font-size:14px;line-height:1.65;color:var(--muted-light);padding:11px 0 11px 18px;border-top:1px solid var(--line-light);position:relative;}
+.proj-points li::before{content:'';position:absolute;left:0;top:19px;width:5px;height:5px;background:var(--black);}
+.proj-points li strong{color:var(--black);font-weight:600;}
+.proj-points code{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--black);background:var(--offwhite);padding:1px 6px;border-radius:2px;}
+.proj-card.live .tag-row{margin-bottom:28px;}
+.proj-actions{margin-top:auto;display:flex;flex-direction:column;gap:12px;align-items:flex-start;}
+.proj-note{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted-light);line-height:1.6;}
+@media(prefers-reduced-motion:reduce){.proj-kicker .dot{animation:none;}}
 @media(max-width:900px){.projects-grid{grid-template-columns:1fr;}.project-featured{padding:34px 26px;}}
 
 /* ---------- RESEARCH FOCUS ---------- */
@@ -691,6 +704,43 @@ footer{background:var(--black);color:var(--white);padding:60px 0 30px;}
         <span class="tag">Explainable AI</span><span class="tag">SHAP</span><span class="tag">Ensemble Learning</span>
         <span class="tag">AUPRC</span><span class="tag">Imbalanced Healthcare Data</span>
         <span class="tag">Nested Cross-Validation</span><span class="tag">Model Stability</span><span class="tag">Model Reliability</span>
+      </div>
+    </div>
+
+    <div class="projects-grid live">
+      <div class="proj-card live reveal">
+        <div class="proj-kicker"><span class="dot"></span>Live project</div>
+        <div class="proj-title">Explainable Credit Risk Assessment System</div>
+        <p class="proj-desc">A web application that estimates how likely a borrower is to default on a loan. The user enters the applicant's details and the loan terms, and the system returns a default-risk estimate on a 0–100% scale.</p>
+        <ul class="proj-points">
+          <li><strong>Borrower inputs:</strong> age, annual income, home ownership, employment length, credit history length, and any previous default on file.</li>
+          <li><strong>Loan inputs:</strong> purpose, loan amount, interest rate, loan-to-income share, and loan grade (A–G).</li>
+          <li><strong>Built for decisions:</strong> the risk estimate is shown alongside the application, so a lender can see how a profile is being assessed. A sample-fill option lets visitors try it instantly.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Credit Risk</span><span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Default Prediction</span><span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Explainable AI</span><span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Classification</span><span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Web App</span>
+        </div>
+        <div class="proj-actions">
+          <a class="btn btn-primary" href="https://explainable-credit-risk-assessment-system.onrender.com" target="_blank" rel="noopener noreferrer">Open live project →</a>
+          <span class="proj-note">Hosted on Render's free tier. The first load can take up to a minute.</span>
+        </div>
+      </div>
+      <div class="proj-card live reveal">
+        <div class="proj-kicker"><span class="dot"></span>Live project</div>
+        <div class="proj-title">Mental Health Score Prediction</div>
+        <p class="proj-desc">A machine learning web app that predicts a student's mental health score (0–10) from social media usage, study habits, sleep, and lifestyle inputs. It is trained on a survey dataset of 5,000 students and served through a FastAPI backend.</p>
+        <ul class="proj-points">
+          <li><strong>Data and modeling:</strong> exploratory analysis, duplicate and outlier cleaning, and feature engineering (log-transformed study hours, ordinal stress level, grouped countries). Linear Regression, Random Forest, and a tuned Random Forest were compared.</li>
+          <li><strong>Deployment:</strong> the full preprocessing and Random Forest pipeline is saved as one model and served by a FastAPI <code>/predict</code> endpoint with strict input validation.</li>
+          <li><strong>Interface:</strong> a plain HTML, CSS, and JavaScript form that validates input, calls the API, and shows the score on an animated gauge.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Python</span><span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Scikit-learn</span><span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Random Forest</span><span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">FastAPI</span><span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Pandas</span><span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">HTML/CSS/JS</span>
+        </div>
+        <div class="proj-actions">
+          <a class="btn btn-primary" href="https://mental-health-score-prediction-ml-umah.onrender.com" target="_blank" rel="noopener noreferrer">Open live project →</a>
+          <span class="proj-note">Hosted on Render's free tier. The first prediction can take 30–60 seconds while the backend wakes up.</span>
+        </div>
       </div>
     </div>
 
