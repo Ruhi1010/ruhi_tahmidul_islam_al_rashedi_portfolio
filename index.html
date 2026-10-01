@@ -751,6 +751,34 @@ footer{background:var(--black);color:var(--white);padding:60px 0 30px;}
       </div>
     </div>
 
+    <div class="projects-grid live">
+      <div class="proj-card live reveal">
+        <div class="proj-kicker"><span class="dot"></span>Live project</div>
+        <div class="proj-title">NYC Airbnb Room Type Prediction</div>
+        <p class="proj-desc">A machine learning web application that predicts the room type of a New York City Airbnb listing from listing, pricing, review, availability, and location information.</p>
+        <ul class="proj-points">
+          <li><strong>Dataset:</strong> NYC Airbnb Open Data (AB_NYC_2019), with listing details and the target variable <code>room_type</code>.</li>
+          <li><strong>Data preparation:</strong> exploratory data analysis, removal of identifier and non-predictive columns, and handling missing review-frequency values by filling them with zero.</li>
+          <li><strong>Modeling:</strong> a preprocessing and machine-learning pipeline, stratified train/test split, model comparison, and hyperparameter tuning using macro F1 for evaluation.</li>
+          <li><strong>Prediction inputs:</strong> latitude, longitude, price, minimum nights, review statistics, host listing count, availability, borough, and neighbourhood.</li>
+          <li><strong>Deployment:</strong> a FastAPI <code>/predict</code> endpoint returns the predicted room type and class probabilities.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Python</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Pandas</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Scikit-learn</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">ColumnTransformer</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Classification</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">FastAPI</span>
+          <span class="tag" style="color:var(--muted-light);border-color:var(--line-light);">Render</span>
+        </div>
+        <div class="proj-actions">
+          <a class="btn btn-primary" href="https://nyc-house-type-project-ml-1.onrender.com" target="_blank" rel="noopener noreferrer">Open live project →</a>
+          <span class="proj-note">Try the deployed NYC Airbnb room-type prediction app.</span>
+        </div>
+      </div>
+    </div>
+
     <div class="projects-grid">
       <div class="proj-card reveal">
         <div class="proj-title">Machine Learning &amp; Data Analysis Projects</div>
